@@ -4,6 +4,10 @@
     <servlet>
         <servlet-name>GetServlet</servlet-name>
         <servlet-class>com.cecihero.onceagain.servlets.GetServlet</servlet-class>
+        <init-param>
+            <param-name>URL</param-name>
+            <param-value>http://oantagonista.com</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetServlet</servlet-name>

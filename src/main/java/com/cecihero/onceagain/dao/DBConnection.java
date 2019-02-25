@@ -28,9 +28,9 @@ public class DBConnection {
     public static Connection getConnectionToDatabase() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver registered");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3360/hplus", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hplus?useTimezone=true&serverTimezone=UTC", "root", "");
             
         } catch (ClassNotFoundException exc) {
             System.out.println("Deu ruim. Cara cadê meu driver?");

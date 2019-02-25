@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>H+ Sport</title>
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
@@ -15,7 +15,7 @@
 		<nav class="nav" role="navigation">
 			<div class="container nav-elements">
 				<div class="branding">
-					<a href="#home"><img src="../images/hpluslogo.svg"
+					<a href="#home"><img src="images/hpluslogo.svg"
 						alt="Logo - H Plus Sports"></a>
 				</div>
 				<!-- branding -->
@@ -83,7 +83,7 @@
 			<nav class="nav" role="navigation">
 				<div class="container nav-elements">
 					<div class="branding">
-						<a href="#home"><img src="../images/hpluslogo.svg"
+						<a href="#home"><img src="images/hpluslogo.svg"
 							alt="Logo - H Plus Sports"></a>
 						<p class="address">
 							100 Main Street<br> Seattle, WA 98144

@@ -17,7 +17,10 @@ package com.cecihero.onceagain.servlets;
 
 import com.cecihero.onceagain.dao.ProductDAO;
 import com.cecihero.onceagain.beans.Product;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +38,28 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String searchStr = req.getParameter("search");
-        
-        List<Product> result = ProductDAO.
+        ProductDAO prodDao = new ProductDAO();
+        List<Product> result = prodDao.getByName(searchStr);
+        String page = getHTMLString(req.getServletContext().getRealPath("/search.html"), result);
+        resp.getWriter().write(page);
     }
-    
+
+    public String getHTMLString(String filePath, List<Product> prods) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        String line = "";
+        StringBuffer sb = new StringBuffer();
+        while((line = br.readLine()) != null) {
+            sb.append(line);
+            
+        }
+        br.close();
+        String page = sb.toString();
+        return MessageFormat.format(page, prods.get(0).getProductImgPath(),
+                                          prods.get(1).getProductImgPath(),
+                                          prods.get(2).getProductImgPath(),
+                                          prods.get(0).getProductName(),
+                                          prods.get(1).getProductName(),
+                                          prods.get(2).getProductName(), 0);
+    }
+
 }

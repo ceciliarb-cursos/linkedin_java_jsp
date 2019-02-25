@@ -16,9 +16,8 @@
 package com.cecihero.onceagain.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,17 +26,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cecil
  */
-public class GetServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletConfig conf = getServletConfig();
-        PrintWriter pw = resp.getWriter();
-        pw.write(conf.getInitParameter("URL"));
-        
-        String htmlResponse = "<html><h3>Hello world!</h3></html>";
-        pw.write(htmlResponse);
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
+//        req.getRequestDispatcher("login.jsp").include(req, resp); //concatena com o que ja printei
     }
-    
     
 }
