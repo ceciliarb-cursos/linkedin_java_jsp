@@ -40,8 +40,11 @@ public class SearchServlet extends HttpServlet {
         String searchStr = req.getParameter("search");
         ProductDAO prodDao = new ProductDAO();
         List<Product> result = prodDao.getByName(searchStr);
-        String page = getHTMLString(req.getServletContext().getRealPath("/search.html"), result);
-        resp.getWriter().write(page);
+        req.setAttribute("products", result);
+        req.getRequestDispatcher("search.jsp").forward(req, resp);
+        
+//        String page = getHTMLString(req.getServletContext().getRealPath("/search.html"), result);
+//        resp.getWriter().write(page);
     }
 
     public String getHTMLString(String filePath, List<Product> prods) throws IOException {

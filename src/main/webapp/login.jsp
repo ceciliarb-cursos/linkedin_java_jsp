@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
-<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat" errorPage="error.jsp" isErrorPage="false"%>
 <html>
 <head>
 <link rel="stylesheet" href="./css/style.css">

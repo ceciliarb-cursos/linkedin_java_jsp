@@ -15,46 +15,41 @@
  */
 package com.cecihero.onceagain.servlets;
 
-import com.cecihero.onceagain.dao.DBConnection;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author cecil
  */
-public class HomeServlet extends HttpServlet {
-    public Connection connection = null;
-    
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("index.html").forward(req, resp);
-    }
+@WebServlet(name = "ProductsServlet", urlPatterns = {"/products"})
+public class ProductsServlet extends HttpServlet {
+    private ArrayList<String> products;
 
     @Override
     public void init() throws ServletException {
-        connection = DBConnection.getConnectionToDatabase();
-        Logger.getLogger(HomeServlet.class.getName()).log(Level.INFO, "Criou a connection.");
+        this.products = new ArrayList<String>();
+        super.init(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void destroy() {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        this.products.add(request.getParameter("product"));
+        HttpSession session = request.getSession();
+        session.setAttribute("noofproducts", this.products);
+        request.setAttribute("products", new ArrayList());
         try {
-            connection.close();
-            Logger.getLogger(HomeServlet.class.getName()).log(Level.INFO, "Fechou a connection.");
-        } catch (SQLException ex) {
-            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("/search.jsp").forward(request, response);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductsServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
- 
-    
 }

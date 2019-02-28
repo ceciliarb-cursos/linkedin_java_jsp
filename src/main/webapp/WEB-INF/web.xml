@@ -13,6 +13,29 @@
         <servlet-name>GetServlet</servlet-name>
         <url-pattern>/getServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.cecihero.onceagain.servlets.HomeServlet</servlet-class>
+        <init-param>
+            <param-name>URL</param-name>
+            <param-value>http://oantagonista.com</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    
+    <session-config>
+        <!--in minutes-->
+        <session-timeout>60</session-timeout>    
+    </session-config>
+    
+    <context-param>
+        <param-name>dbURL</param-name>
+        <param-value>jdbc:mysql://localhost:3306/hplus</param-value>
+    </context-param>
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

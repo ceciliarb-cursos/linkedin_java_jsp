@@ -16,7 +16,10 @@
 package com.cecihero.onceagain.servlets;
 
 import java.io.IOException;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,20 +29,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cecil
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/teste",
+            initParams = @WebInitParam(name = "URL", value = "http://google.com"))
+public class TesteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(404);
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
-//        req.getRequestDispatcher("login.jsp").include(req, resp); //concatena com o que ja printei
-    }
+        ServletConfig config = getServletConfig();
+        resp.getWriter().write(config.getInitParameter("URL")+"<br>");
+        ServletContext context = getServletContext();
+        resp.getWriter().write(context.getInitParameter("dbURL")+"<br>");
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("username", req.getParameter("username"));
-        req.getRequestDispatcher("home.jsp").forward(req, resp);
+        String name = req.getParameter("name");
+        resp.getWriter().write("alou mamae! it's me, "+name);
+//        resp.setStatus(404);
     }
+    
     
 }
