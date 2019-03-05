@@ -15,12 +15,15 @@
  */
 package com.cecihero.onceagain.dao;
 
+import com.cecihero.onceagain.beans.Order;
 import com.cecihero.onceagain.beans.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,5 +92,28 @@ public class UserDAO {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
+    }
+    
+    public List<Order> getOrders(String username) {
+        Order order = null;
+        List<Order> result = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnectionToDatabase();
+            String sql = "select * from orders where user_name=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet res = stmt.executeQuery();
+            while(res.next()) {
+                order = new Order(res.getInt("order_id"), 
+                                  res.getString("product_name"),
+                                  res.getString("image_path"),
+                                  res.getDate("order_date"),
+                                  res.getString("user_name"));
+                result.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 }

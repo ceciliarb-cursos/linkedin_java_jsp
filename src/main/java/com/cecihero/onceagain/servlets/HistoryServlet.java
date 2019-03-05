@@ -16,7 +16,9 @@
 package com.cecihero.onceagain.servlets;
 
 import com.cecihero.onceagain.dao.UserDAO;
+import com.cecihero.onceagain.beans.Order;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +34,10 @@ public class HistoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = (String)req.getSession().getAttribute("username");
+        UserDAO usrDAO = new UserDAO();
+        List<Order> orders = usrDAO.getOrders(username);
+        req.setAttribute("orders", orders);
         req.getRequestDispatcher("history.jsp").forward(req, resp); 
     }    
 }

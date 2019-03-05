@@ -1,6 +1,8 @@
+<%@page import="java.util.Calendar"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.ceci.com/apptags" prefix="ceci" %>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -38,6 +40,8 @@
   </div>container tagline -->
 	</header>
 
+<ceci:testeCeci date="<%=Calendar.getInstance().getTime()%>" name="Cecilia"></ceci:testeCeci>                                                        
+        
 	<fmt:setBundle basename="com.test.resources.applicationResources"
 		var="message" scope="session" />
 
