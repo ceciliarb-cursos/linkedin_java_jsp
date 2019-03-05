@@ -27,26 +27,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cecil
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/orderHistory")
+public class HistoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(404);
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
-//        req.getRequestDispatcher("login.jsp").include(req, resp); //concatena com o que ja printei
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO usrDAO = new UserDAO();
-        if(usrDAO.validateUser(req.getParameter("username"), req.getParameter("password"))) {
-            req.getSession().setAttribute("username", req.getParameter("username"));
-            req.getRequestDispatcher("home.jsp").forward(req, resp);
-        } else {
-            req.setAttribute("error", "Login failed!");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-        }
-    }
-    
+        req.getRequestDispatcher("history.jsp").forward(req, resp); 
+    }    
 }

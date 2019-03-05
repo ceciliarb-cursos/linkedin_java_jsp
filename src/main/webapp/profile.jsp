@@ -1,7 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="ex" uri="http://www.ketkee.com/dateFormatter"%>
+<%--<%@ taglib prefix="ex" uri="http://www.ketkee.com/dateFormatter"%>--%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -39,11 +39,11 @@
   </div>container tagline -->
 	</header>
 
-	<jsp:useBean id="user" scope="request" type="com.test.beans.User"></jsp:useBean>
+	<jsp:useBean id="user" scope="request" type="com.cecihero.onceagain.beans.User"></jsp:useBean>
 	<section>
 
-		<ex:formatDate date="<%=Calendar.getInstance().getTime()%>"
-			format="dd-MM-YYYY hh:mm"></ex:formatDate>
+<!--		<ex:formatDate date="<%=Calendar.getInstance().getTime()%>"
+			format="dd-MM-YYYY hh:mm"></ex:formatDate>-->
 	</section>
 	
 	<section id="profile" class="section">
@@ -57,11 +57,11 @@
 				</tr>
 				<tr>
 					<td>First Name</td>
-					<td><jsp:getProperty property="firstName" name="user" /></td>
+					<td><jsp:getProperty property="fname" name="user" /></td>
 				</tr>
 				<tr>
 					<td>Last Name</td>
-					<td><jsp:getProperty property="lastName" name="user" /></td>
+					<td><jsp:getProperty property="lname" name="user" /></td>
 				</tr>
 				<tr>
 					<td>Age</td>
@@ -75,7 +75,31 @@
 			</table>
 		</div>
 	</section>
+                                
+        <section id="weight" class="section">
+		<div class="container">
+			<h2 class="headline">Weight Sumary</h2>
+			<table id="profile">
+				<tr>
+					<td>January</td>
+					<td>${weightSumary["January"]}</td>
+				</tr>
+				<tr>
+					<td>February</td>
+					<td>${weightSumary["February"]}</td>
+				</tr>
+				<tr>
+					<td>March</td>
+					<td>${weightSumary["March"]}</td>
+				</tr>
+				<tr>
+					<td>April</td>
+					<td>${weightSumary["April"]}</td>
+				</tr>
 
+			</table>
+		</div>
+	</section>
 
 
 	<footer class="footer">

@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.cecihero.onceagain.beans.User;
 import com.cecihero.onceagain.dao.UserDAO;
+import java.sql.Connection;
 
 /**
  *
@@ -42,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
         
         User newUsr = new User(username, password, fname, lname, age, activity);
         UserDAO daoUsr = new UserDAO();
-        int rows = daoUsr.registerUser(newUsr);
+        int rows = daoUsr.registerUser(newUsr, (Connection)getServletContext().getAttribute("dbconnection"));
         if(rows == 0) {
             resp.getWriter().write("deu ruim");
         } else {

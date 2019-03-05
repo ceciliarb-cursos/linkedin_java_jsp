@@ -18,7 +18,9 @@ package com.cecihero.onceagain.dao;
 import com.cecihero.onceagain.beans.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,10 +30,9 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
-    public int registerUser(User usr) {
+    public int registerUser(User usr, Connection conn) {
         int rowsAffected = 0;
         try {
-            Connection conn = DBConnection.getConnectionToDatabase();
             String sql = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, usr.getUsername());
@@ -46,7 +47,47 @@ public class UserDAO {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
-        
+
         return rowsAffected;
+    }
+
+    public boolean validateUser(String username, String password) {
+        boolean isValid = false;
+        try {
+            Connection conn = DBConnection.getConnectionToDatabase();
+            String sql = "select * from users where username=? and password=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet result = stmt.executeQuery();
+            while (result.next()) {
+                isValid = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isValid;
+    }
+    
+    public User getProfileDetails(String username) {
+        User user = null;
+        try {
+            Connection conn = DBConnection.getConnectionToDatabase();
+            String sql = "select * from users where username=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet result = stmt.executeQuery();
+            while(result.next()) {
+                user = new User(result.getString("username"), 
+                                result.getString("password"), 
+                                result.getString("first_name"), 
+                                result.getString("last_name"),
+                                result.getInt("age"),
+                                result.getString("activity"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
 }

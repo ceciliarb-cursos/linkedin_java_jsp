@@ -16,7 +16,10 @@
 package com.cecihero.onceagain.servlets;
 
 import com.cecihero.onceagain.dao.UserDAO;
+import com.cecihero.onceagain.beans.User;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,26 +30,22 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cecil
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/viewProfile")
+public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(404);
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
-//        req.getRequestDispatcher("login.jsp").include(req, resp); //concatena com o que ja printei
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO usrDAO = new UserDAO();
-        if(usrDAO.validateUser(req.getParameter("username"), req.getParameter("password"))) {
-            req.getSession().setAttribute("username", req.getParameter("username"));
-            req.getRequestDispatcher("home.jsp").forward(req, resp);
-        } else {
-            req.setAttribute("error", "Login failed!");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-        }
-    }
-    
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.getProfileDetails((String)req.getSession().getAttribute("username"));
+        req.setAttribute("user", user);
+        
+        Map<String, Double> weightSumary = new HashMap<>();
+        weightSumary.put("January", 59.0);
+        weightSumary.put("February", 59.4);
+        weightSumary.put("March", 58.7);
+        weightSumary.put("April", 58.5);
+        req.setAttribute("weightSumary", weightSumary);
+                
+        req.getRequestDispatcher("profile.jsp").forward(req, resp); //concatena com o que ja printei
+    }    
 }
